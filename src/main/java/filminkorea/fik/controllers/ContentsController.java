@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -19,5 +18,22 @@ public class ContentsController {
     @GetMapping("/content/all")
     public List<ContentsDto> getAllContents() {
         return contentsService.getAllContents();
+    }
+
+    // contents에서 영화 타이틀 가져오기
+    @GetMapping("/content/getAllMovies")
+    public List<String> getAllMovieContents() {
+        return contentsService.getAllMovieContents();
+    }
+
+    // contents에서 드라마 타이틀 가져오기
+    @GetMapping("/content/getAllDramas")
+    public List<String> getAllDramaContents() {
+        return contentsService.getAllDramaContents();
+    }
+
+    @GetMapping("/content/getLocationsAndAddressesByTitle")
+    public List<ContentsDto> getLocationsAndAddressesByTitle(@RequestParam String title){
+        return contentsService.getLocationsAndAddressesByTitle(title);
     }
 }

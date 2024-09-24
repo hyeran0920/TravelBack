@@ -6,45 +6,40 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    // Spring Security 넣으면 이거 주석 풀면 됩니다.
+    // Spring Security 설정
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(AbstractHttpConfigurer::disable)  // CSRF 비활성화
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/check").permitAll()
-                        .anyRequest().authenticated())
-                .exceptionHandling(configurer -> {
-                    configurer.authenticationEntryPoint(((request, response, authException) -> {
-                        // 인증 실패 시 처리 로직
-                    }));
-                    configurer.accessDeniedHandler(((request, response, accessDeniedException) -> {
-                        // 접근 거부 시 처리 로직
-                    }));
-                });
+                        .requestMatchers("/check", "/content/**","/content/getLocationsAndAddressesByTitle").permitAll()
+                        .anyRequest().authenticated());
+
         return httpSecurity.build();
     }
 
-    //cors 설정
+    // 전역 CORS 설정
     @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS")
-                        .allowedHeaders("*")
-                        .allowCredentials(true);
-            }
-        };
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:3000"));  // 허용할 Origin 설정
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));  // 허용할 HTTP 메서드 설정
+        configuration.setAllowedHeaders(List.of("*"));  // 허용할 헤더 설정
+        configuration.setAllowCredentials(true);  // 인증 정보를 허용할지 설정
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);  // 모든 경로에 대해 CORS 설정 적용
+        return source;
     }
 }

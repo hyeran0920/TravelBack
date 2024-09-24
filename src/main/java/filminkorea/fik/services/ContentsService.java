@@ -46,6 +46,23 @@ public class ContentsService {
         return contents.map(this::convertToDto);
     }
 
+    public List<String> getAllMovieContents() {
+        return contentsRepository.findDistinctMovieContents();
+    }
+
+    public List<String> getAllDramaContents() {
+        return contentsRepository.findDistinctDramaContents();
+    }
+
+    public List<ContentsDto> getLocationsAndAddressesByTitle(String ContentTitle) {
+        List<Object[]> results = contentsRepository.findLocationsAndAddressesByTitle(ContentTitle);
+        // Object[] 배열을 ContentsDto로 변환
+        return results.stream()
+                .map(result -> new ContentsDto((String) result[0], (String) result[1]))
+                .collect(Collectors.toList());
+    }
+
+
     //이 방식은 dto가 아닌 entity를 사용해서 하기 때문에 보안 상의 문제가 생길 수 있음.
 //    getAllContents() : 데이터베이스에서 모든 contents 엔티티를 조회해서 반환한다.
 //    public List<Contents> getAllContents() {
@@ -54,6 +71,5 @@ public class ContentsService {
 //
 //    findByID() : 특정 id에 해당하는 정보 추출
 //    public Optional<Contents> getContentById(int count_num) {
-//
 
 }
