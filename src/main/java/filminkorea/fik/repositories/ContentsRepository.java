@@ -20,5 +20,9 @@ public interface ContentsRepository extends JpaRepository<Contents, Integer> {
     @Query("SELECT c.place_Name, c.addr FROM Contents c WHERE c.title_NM = LOWER(:title)")
     List<Object[]> findLocationsAndAddressesByTitle(@Param("title") String title);
 
+    // 제목과 촬영지를 기준으로 해당 장소의 상세 정보를 가져오는 쿼리
+    @Query("SELECT c FROM Contents c WHERE c.title_NM = LOWER(:title) AND c.place_Name = LOWER(:place)")
+    Contents findInformationByTitleAndPlace(@Param("title") String title, @Param("place") String place);
+
 
 }

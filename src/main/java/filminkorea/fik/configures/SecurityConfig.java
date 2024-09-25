@@ -9,7 +9,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)  // CSRF 비활성화
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/check", "/content/**","/content/getLocationsAndAddressesByTitle","/thumbnails/**").permitAll()
+                        .requestMatchers("/check", "/content/**","/content/getLocationsAndAddressesByTitle","/content/getInformationByTitleAndPlace").permitAll()
                         .anyRequest().authenticated());
 
         return httpSecurity.build();
@@ -34,7 +33,6 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-
         configuration.setAllowedOrigins(List.of("http://localhost:3000"));  // 허용할 Origin 설정
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));  // 허용할 HTTP 메서드 설정
         configuration.setAllowedHeaders(List.of("*"));  // 허용할 헤더 설정
