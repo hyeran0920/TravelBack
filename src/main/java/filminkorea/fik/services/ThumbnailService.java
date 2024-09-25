@@ -78,4 +78,6 @@ public class ThumbnailService {
         }).collect(Collectors.toList());
     }
 
+
+
 }

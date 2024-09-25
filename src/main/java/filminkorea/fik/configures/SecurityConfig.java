@@ -12,6 +12,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -20,10 +22,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                .cors(withDefaults()) // CORS 활성화
                 .csrf(AbstractHttpConfigurer::disable)  // CSRF 비활성화
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/check", "/content/**","/content/getLocationsAndAddressesByTitle","/content/getInformationByTitleAndPlace").permitAll()
+                        .requestMatchers("/check", "/content/**","/content/getLocationsAndAddressesByTitle","/content/getInformationByTitleAndPlace", "/thumbnails/**").permitAll()
                         .anyRequest().authenticated());
 
         return httpSecurity.build();
@@ -43,3 +46,4 @@ public class SecurityConfig {
         return source;
     }
 }
+
