@@ -19,5 +19,12 @@ public class Contents {
     private String media_type;
     private String title_NM;
     private String place_Name;
+    private String RELATE_PLACE_DC;
+    private String OPER_TIME;
+    private String REST_TIME;
+    private String RSTDE_GUID_CN;
     private String addr;
+    private String LC_LA;
+    private String LC_LO;
+    private String TEL_NO;
 }
