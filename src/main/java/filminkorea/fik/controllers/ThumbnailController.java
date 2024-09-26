@@ -47,7 +47,6 @@ public class ThumbnailController {
     }
 
 
-
     @Autowired
     public ThumbnailController(ThumbnailService thumbnailService) {
         this.thumbnailService = thumbnailService;

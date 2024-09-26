@@ -26,7 +26,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)  // CSRF 비활성화
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/check", "/content/**","/content/getLocationsAndAddressesByTitle","/content/getInformationByTitleAndPlace", "/thumbnails/**").permitAll()
+                        .requestMatchers("/check", "/content/**","/content/getLocationsAndAddressesByTitle","/content/getInformationByTitleAndPlace", "/thumbnails/**","/layer/**").permitAll()
                         .anyRequest().authenticated());
 
         return httpSecurity.build();
