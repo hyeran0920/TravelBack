@@ -52,4 +52,10 @@ public class ContentsController {
 
         return ResponseEntity.ok(result);  // 결과가 있으면 200 OK로 반환
     }
+
+    // 주소를 기준으로 콘텐츠를 조회하는 엔드포인트
+    @GetMapping("/content/searchByAddress")
+    public List<ContentsDto> getContentsByAddress(@RequestParam(defaultValue = "") String address) {
+        return contentsService.getContentsByAddress(address);
+    }
 }

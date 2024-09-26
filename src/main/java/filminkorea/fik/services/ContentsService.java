@@ -78,5 +78,13 @@ public class ContentsService {
         return convertToDto(result);
     }
 
+    // 주소를 기준으로 콘텐츠를 조회하고 DTO로 변환하는 메서드
+    public List<ContentsDto> getContentsByAddress(String address) {
+        List<Contents> contentsList = contentsRepository.findContentsByAddress(address);
+        return contentsList.stream()
+                .map(this::convertToDto)  // 엔티티를 DTO로 변환
+                .collect(Collectors.toList());
+    }
+
 
 }
