@@ -28,6 +28,15 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'mysql:mysql-connector-java:8.0.33'
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.15.0'
+    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:3.0.1'  // JAXB API
+    implementation 'org.glassfish.jaxb:jaxb-runtime:3.0.2'        // JAXB 런타임
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'  // JPA 의존성
+    implementation 'jakarta.transaction:jakarta.transaction-api:2.0.0'      // 트랜잭션 관리 의존성
+
+
+
+
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.mysql:mysql-connector-j'

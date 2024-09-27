@@ -1,6 +1,8 @@
 package filminkorea.fik.configures;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -12,6 +14,12 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/thumbnails/**","/layer/**")
                 .addResourceLocations("file://C:/upload/","file://C:/layer/");
 
+    }
+
+    //맛집 api불러오기 용
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 
 }
