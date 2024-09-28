@@ -28,4 +28,17 @@ public interface ContentsRepository extends JpaRepository<Contents, Integer> {
     @Query("SELECT c FROM Contents c WHERE c.addr LIKE %:address%")
     List<Contents> findContentsByAddress(@Param("address") String address);
 
+    // 제목을 기준으로 검색하는 쿼리 : containing을 붙여주면 like 검색이 가능
+//    @Query("SELECT c FROM Contents c WHERE LOWER(c.title_NM) LIKE LOWER(CONCAT('%', :title_NM, '%'))")
+//    List<Contents> findByTitle_NMContaining(@Param("title_NM") String title_NM);
+
+    //제목, place_Name, addr 기준으로
+    @Query("SELECT c FROM Contents c WHERE " +
+            "LOWER(c.title_NM) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR " +
+            "LOWER(c.place_Name) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR " +
+            "LOWER(c.addr) LIKE LOWER(CONCAT('%', :searchTerm, '%'))")
+    List<Contents> searchByTitleOrPlaceOrAddress(@Param("searchTerm") String searchTerm);
+
+
+
 }

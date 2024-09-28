@@ -1,9 +1,11 @@
 package filminkorea.fik.controllers;
 
 import filminkorea.fik.dtos.ContentsDto;
+import filminkorea.fik.entities.Contents;
 import filminkorea.fik.services.ContentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -57,5 +59,18 @@ public class ContentsController {
     @GetMapping("/content/searchByAddress")
     public List<ContentsDto> getContentsByAddress(@RequestParam(defaultValue = "") String address) {
         return contentsService.getContentsByAddress(address);
+    }
+
+    // repository에서 검색 결과를 받아 비즈니스 로직 실행
+//    @GetMapping("/content/searchList")
+//    public List<Contents> searchList(@RequestParam String title) {
+//        System.out.println("Received title: " + title); // title 값 확인
+//        return contentsService.search(title);
+//    }
+
+    // 제목, 장소명, 주소로 검색하는 엔드포인트
+    @GetMapping("/content/searchList")
+    public List<ContentsDto> searchContents(@RequestParam("query") String query) {
+        return contentsService.searchByTitlePlaceOrAddress(query);
     }
 }

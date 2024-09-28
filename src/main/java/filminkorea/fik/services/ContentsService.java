@@ -3,6 +3,7 @@ package filminkorea.fik.services;
 import filminkorea.fik.dtos.ContentsDto;
 import filminkorea.fik.entities.Contents;
 import filminkorea.fik.repositories.ContentsRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -81,6 +82,19 @@ public class ContentsService {
     // 주소를 기준으로 콘텐츠를 조회하고 DTO로 변환하는 메서드
     public List<ContentsDto> getContentsByAddress(String address) {
         List<Contents> contentsList = contentsRepository.findContentsByAddress(address);
+        return contentsList.stream()
+                .map(this::convertToDto)  // 엔티티를 DTO로 변환
+                .collect(Collectors.toList());
+    }
+
+    // 제목을 기준으로 콘텐츠 검색하고 dto로 변환하는 메서드
+//    public List<Contents> search(String title) {
+//        return contentsRepository.findByTitle_NMContaining(title);
+//    }
+
+    //제목, place_Name, addr
+    public List<ContentsDto> searchByTitlePlaceOrAddress(String searchTerm) {
+        List<Contents> contentsList = contentsRepository.searchByTitleOrPlaceOrAddress(searchTerm);
         return contentsList.stream()
                 .map(this::convertToDto)  // 엔티티를 DTO로 변환
                 .collect(Collectors.toList());
