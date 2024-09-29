@@ -7,15 +7,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-//본인이 기존에 작성해뒀던 name을 쓰면 될 것 같습니다.
-@Table(name = "contents")
 @Getter
 @Setter
 @NoArgsConstructor
 public class Contents {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Count_Num;
+    private int Count_Num;  // 콘텐츠 ID
     private String media_type;
     private String title_NM;
     private String place_Name;
@@ -28,3 +26,4 @@ public class Contents {
     private String LC_LO;
     private String TEL_NO;
 }
+
