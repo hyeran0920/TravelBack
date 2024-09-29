@@ -26,9 +26,11 @@ public class ContentsDto {
     private String TEL_NO;
 
     // place_Name과 addr을 받는 생성자 추가 : 작품의 장소와 주소를 알기 위해 사용될 예정
-    public ContentsDto(String place_Name, String addr) {
+    public ContentsDto(String place_Name, String addr, String LC_LA, String LC_LO) {
         this.place_Name = place_Name;
         this.addr = addr;
+        this.LC_LA = LC_LA;
+        this.LC_LO = LC_LO;
     }
 
     // ContentsDto에 모든 필드를 받는 생성자 추가

@@ -63,7 +63,7 @@ public class ContentsService {
         List<Object[]> results = contentsRepository.findLocationsAndAddressesByTitle(contentTitle);
         // Object[] 배열을 ContentsDto로 변환
         return results.stream()
-                .map(result -> new ContentsDto((String) result[0], (String) result[1]))
+                .map(result -> new ContentsDto((String) result[0], (String) result[1],(String) result[2], (String) result[3] ))
                 .collect(Collectors.toList());
     }
 
