@@ -32,11 +32,12 @@ public interface ContentsRepository extends JpaRepository<Contents, Integer> {
 //    @Query("SELECT c FROM Contents c WHERE LOWER(c.title_NM) LIKE LOWER(CONCAT('%', :title_NM, '%'))")
 //    List<Contents> findByTitle_NMContaining(@Param("title_NM") String title_NM);
 
-    //제목, place_Name, addr 기준으로
+    //제목, place_Name, addr 기준으로 검색 => 대소문자 구분x 근데 저희는 한국어라서...적용 안될지도?
     @Query("SELECT c FROM Contents c WHERE " +
             "LOWER(c.title_NM) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR " +
             "LOWER(c.place_Name) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR " +
             "LOWER(c.addr) LIKE LOWER(CONCAT('%', :searchTerm, '%'))")
+    // 검색어를 파라미터로 받아서 제목, 장소명, 주소 중 하나라도 일치하는 콘텐츠 목록을 반환
     List<Contents> searchByTitleOrPlaceOrAddress(@Param("searchTerm") String searchTerm);
 
 

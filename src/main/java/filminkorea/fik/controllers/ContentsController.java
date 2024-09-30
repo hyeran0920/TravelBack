@@ -69,8 +69,13 @@ public class ContentsController {
 //    }
 
     // 제목, 장소명, 주소로 검색하는 엔드포인트
+    // Repository & Service에서 SearchTerm을 쓰는 이유 : 메서드 내부에서 검색어를 처리할 때 사용하는 변수
+    // controller에서 query를 쓰는 이유 : 클라이언트가 요청할 때 전달하는 URL 파라미터의 이름
+    // 일치시켜도 상관은 없음!
     @GetMapping("/content/searchList")
     public List<ContentsDto> searchContents(@RequestParam("query") String query) {
+        // 요청 파라미터 "query"로 검색어를 받음
+        // 서비스 계층의 searchByTitlePlaceOrAddress 메서드를 호출하여 검색 결과를 반환
         return contentsService.searchByTitlePlaceOrAddress(query);
     }
 }

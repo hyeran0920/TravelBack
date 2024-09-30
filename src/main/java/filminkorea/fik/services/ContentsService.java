@@ -92,12 +92,14 @@ public class ContentsService {
 //        return contentsRepository.findByTitle_NMContaining(title);
 //    }
 
-    //제목, place_Name, addr
+    //제목, place_Name, addr 기준으로 콘텐츠를 검색하는 서비스 메서드
     public List<ContentsDto> searchByTitlePlaceOrAddress(String searchTerm) {
+        // Repository에서 쿼리 메서드를 호출하여 검색어에 맞는 콘텐츠 리스트를 가져옴
         List<Contents> contentsList = contentsRepository.searchByTitleOrPlaceOrAddress(searchTerm);
-        return contentsList.stream()
-                .map(this::convertToDto)  // 엔티티를 DTO로 변환
-                .collect(Collectors.toList());
+        // 엔티티 리스트를 DTO 리스트로 변환
+        return contentsList.stream() // 콘텐츠 리스트를 스트림으로 변환
+                .map(this::convertToDto)  // 엔티티를 DTO로 변환하는 메서드를 호출
+                .collect(Collectors.toList()); // 변환된 dto 리스트를 컬레션으로 반환
     }
 
 

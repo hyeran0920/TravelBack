@@ -23,6 +23,7 @@ public class ThumbnailController {
 
     private final ThumbnailService thumbnailService;
 
+    // 이미지 파일이 저장될 디렉토리 경로 지정
     private final String uploadDir = "c:/upload/";
 
     // 이미지 파일을 제공하는 엔드포인트 추가
@@ -35,13 +36,15 @@ public class ThumbnailController {
 
             // 파일이 존재하고 읽을 수 있을 때만 응답
             if (resource.exists() && resource.isReadable()) {
-                return ResponseEntity.ok()
-                        .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + image_Name + "\"")
-                        .body(resource);
+                return ResponseEntity.ok() // 성공 응답 생성
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + image_Name + "\"") //파일명 설정
+                        .body(resource); // 파일 데이터를 응답에 포함
             } else {
+                // 파일 없으면 404 응답
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
         } catch (Exception e) {
+            // 서버 에러 발생 시 500 응답
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
@@ -52,9 +55,11 @@ public class ThumbnailController {
         this.thumbnailService = thumbnailService;
     }
 
+    // 파일 업로드를 처리하는 메서드
     @PostMapping("/upload")
     public ResponseEntity<ThumbnailDto> uploadThumbnail(@RequestParam("file") MultipartFile file) {
         try {
+            // ThumbnailService를 이용해 파일을 저장하고, 저장된 ThumbnailDto를 반환
             ThumbnailDto savedThumbnail = thumbnailService.saveThumbnail(file);
             return new ResponseEntity<>(savedThumbnail, HttpStatus.OK);
         } catch (IOException e) {
@@ -62,15 +67,20 @@ public class ThumbnailController {
         }
     }
 
+    // ID로 Thumbnail을 조회하는 메서드
     @GetMapping("/{id}")
     public ResponseEntity<ThumbnailDto> getThumbnail(@PathVariable Integer id) {
+        
+        //ID로 조회
         Optional<ThumbnailDto> thumbnailDto = thumbnailService.getThumbnail(id);
         return thumbnailDto.map(dto -> new ResponseEntity<>(dto, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    // 모든 썸네일을 조회하는 메서드
     @GetMapping("/all")
     public ResponseEntity<List<ThumbnailDto>> getAllThumbnails() {
+        // 전체 썸네일 조회
         List<ThumbnailDto> thumbnails = thumbnailService.getAllThumbnails();
         return new ResponseEntity<>(thumbnails, HttpStatus.OK);
     }
