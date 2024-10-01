@@ -40,6 +40,12 @@ public interface ContentsRepository extends JpaRepository<Contents, Integer> {
     // 검색어를 파라미터로 받아서 제목, 장소명, 주소 중 하나라도 일치하는 콘텐츠 목록을 반환
     List<Contents> searchByTitleOrPlaceOrAddress(@Param("searchTerm") String searchTerm);
 
+    // 데이터 랜덤으로 7개 가져오는 코드 => rand()로 무작위 숫자 추출
+    // rand() 때문에 nativeQuery로 JPA에서 DB에 직접적으로 실행되는 SQL 쿼리를 true 값을 줘서 쓸 수 있게 함
+    // 7개만 가져오니까 이게 10번 -> 1번으로 돌아갈 때 효과가...너무...별로임
+    @Query(value = "SELECT * FROM Contents ORDER BY RAND() LIMIT 9", nativeQuery = true)
+    List<Contents> findRandomContents();
+
 
 
 }

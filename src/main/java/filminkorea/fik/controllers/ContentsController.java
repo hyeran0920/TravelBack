@@ -78,4 +78,10 @@ public class ContentsController {
         // 서비스 계층의 searchByTitlePlaceOrAddress 메서드를 호출하여 검색 결과를 반환
         return contentsService.searchByTitlePlaceOrAddress(query);
     }
+
+    // 랜덤한 7개의 촬영지 정보를 가져오는 엔드포인트
+    @GetMapping("/content/random")
+    public List<ContentsDto> getRandomContents() {
+        return contentsService.getRandomContents();
+    }
 }
