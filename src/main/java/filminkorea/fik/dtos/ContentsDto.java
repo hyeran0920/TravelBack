@@ -48,5 +48,13 @@ public class ContentsDto {
         this.LC_LO = lcLo;
         this.TEL_NO = telNo;
     }
+    public ContentsDto(String titleNm, String placeName, String addr, String lcLa, String lcLo) {
+        this.title_NM = titleNm;
+        this.place_Name = placeName;
+        this.addr = addr;
+        this.LC_LA = lcLa;
+        this.LC_LO = lcLo;
+    }
+
 
 }

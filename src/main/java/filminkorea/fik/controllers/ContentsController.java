@@ -84,4 +84,9 @@ public class ContentsController {
     public List<ContentsDto> getRandomContents() {
         return contentsService.getRandomContents();
     }
+
+    @GetMapping("/content/map")
+    public List<ContentsDto> findTotalContentPlaceOnTheMap(){
+        return contentsService.findTotalContentPlaceOnTheMap();
+    }
 }

@@ -20,6 +20,10 @@ public interface ContentsRepository extends JpaRepository<Contents, Integer> {
     @Query("SELECT c.place_Name, c.addr, c.LC_LA, c.LC_LO FROM Contents c WHERE c.title_NM = LOWER(:title)")
     List<Object[]> findLocationsAndAddressesByTitle(@Param("title") String title);
 
+    // 전체 촬영지 장소 지도에 표시할 데이터 : 장소명, 주소, 작품명 필요데이터 : 위도, 경도
+    @Query("SELECT c.place_Name, c.addr, c.LC_LA, c.LC_LO, c.title_NM FROM Contents c")
+    List<Object[]> findTotalContentPlaceOnTheMap();
+
     // 제목과 촬영지를 기준으로 해당 장소의 상세 정보를 가져오는 쿼리
     @Query("SELECT c FROM Contents c WHERE c.title_NM = LOWER(:title) AND c.place_Name = LOWER(:place)")
     Contents findInformationByTitleAndPlace(@Param("title") String title, @Param("place") String place);
@@ -45,6 +49,8 @@ public interface ContentsRepository extends JpaRepository<Contents, Integer> {
     // 7개만 가져오니까 이게 10번 -> 1번으로 돌아갈 때 효과가...너무...별로임
     @Query(value = "SELECT * FROM Contents ORDER BY RAND() LIMIT 9", nativeQuery = true)
     List<Contents> findRandomContents();
+
+
 
 
 

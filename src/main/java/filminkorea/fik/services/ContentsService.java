@@ -102,12 +102,31 @@ public class ContentsService {
                 .collect(Collectors.toList()); // 변환된 dto 리스트를 컬레션으로 반환
     }
 
+
     // 랜덤한 7개의 contents를 가져오는 서비스 메서드
     public List<ContentsDto> getRandomContents() {
         List<Contents> contents = contentsRepository.findRandomContents();
         return contents.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
+    }
+
+
+    public List<ContentsDto> findTotalContentPlaceOnTheMap(){
+        List<Object[]> contentPlace = contentsRepository.findTotalContentPlaceOnTheMap();
+        return  contentPlace.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    private ContentsDto convertToDto(Object[] contentPlace) {
+        return new ContentsDto(
+                (String) contentPlace[4],  // title_NM
+                (String) contentPlace[0],  // place_Name
+                (String) contentPlace[1],  // addr
+                (String) contentPlace[2],  // LC_LA
+                (String) contentPlace[3]   // LC_LO
+        );
     }
 
 
